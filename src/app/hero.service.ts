@@ -4,12 +4,13 @@ import { Hero } from './heroes/hero';
 import { Observable, of } from 'rxjs';
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HeroService {
-  private heroesUrl = 'api/heros';
+  private heroesUrl = 'http://localhost:8080/api/heros';
   constructor(
     private http: HttpClient,
     private messageService: MessageService
@@ -17,10 +18,19 @@ export class HeroService {
   getHeroes(): Observable<Hero[]> {
     this.messageService.add('HeroService: fetched heroes');
     // return of(HEROS);
-    return this.http.get<Hero[]>(this.heroesUrl);
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
+      catchError(this.handleError<Hero[]>('getHeros', []))
+    );
   }
   getHero(id: number): Observable<Hero> {
     this.messageService.add(`HeroService: fetched hero id = ${id}`);
     return of(HEROS.find(hero => hero.id === id));
+  }
+  private handleError<T>(operation = 'operation', result?: T) {
+      return (error: any): Observable<T> => {
+        console.error(error);
+        console.log(`${operation} failed: ${error.message}`);
+        return of(result as T);
+      };
   }
 }
