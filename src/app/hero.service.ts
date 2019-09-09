@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import {HEROS} from './mock-heroes';
+import {Hero} from './heroes/hero';
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +8,7 @@ import { Injectable } from '@angular/core';
 export class HeroService {
 
   constructor() { }
+  getHeroes(): Hero[] {
+    return HEROS;
+  }
 }
