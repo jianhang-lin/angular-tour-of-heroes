@@ -19,18 +19,20 @@
   height: 1.6em;
   border-radius: 4px;
 }
-.heroes li.selected:hover {
-  background-color: #BBD8DC !important;
-  color: white;
-}
 .heroes li:hover {
   color: #607D8B;
   background-color: #DDD;
   left: .1em;
 }
-.heroes .text {
+.heroes a {
+  color: #333;
+  text-decoration: none;
   position: relative;
-  top: -3px;
+  display: block;
+  width: 250px;
+}
+.heroes a:hover {
+  color: #607d8b;
 }
 .heroes .badge {
   display: inline-block;
